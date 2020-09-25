@@ -1,4 +1,4 @@
-class ReadCSV 
+class ReadCSV
   def initialize(file_path)
     @file_path = file_path
   end
@@ -13,17 +13,9 @@ class ReadCSV
 
   def headers
     [
-      "Data operacji", 
-      "Data waluty", 
-      "Typ transakcji", 
-      "Kwota", 
-      "Waluta", 
-      "Saldo po transakcji", 
-      "Opis transakcji", 
-      "Lokalizacja", 
-      "Data i czas transakcji", 
-      "Oryginalna kwota operacji", 
-      "Numer operacji"
+      'Data operacji', 'Data waluty', 'Typ transakcji', 'Kwota', 'Waluta',
+      'Saldo po transakcji', 'Opis transakcji', 'Lokalizacja',
+      'Data i czas transakcji', 'Oryginalna kwota operacji', 'Numer operacji'
     ]
   end
 end

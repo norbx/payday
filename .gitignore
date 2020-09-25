@@ -1,3 +1,5 @@
 .byebug_history
 *.swp
-*.csv
+/*.csv
+.rspec
+.ruby-version
