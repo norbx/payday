@@ -16,7 +16,7 @@
 require 'csv'
 require 'byebug'
 
-Dir['./lib/*.rb'].sort.each { |file| require file }
+Dir['./lib/**/*.rb'].sort.each { |file| require file }
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

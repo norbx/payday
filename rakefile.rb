@@ -1,5 +1,9 @@
 require './config/application'
 
+task :payday do
+  ruby './payday.rb'
+end
+
 namespace :db do
   task :create do
     ActiveRecord::Migration.class_eval do
