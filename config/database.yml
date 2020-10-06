@@ -1,0 +1,4 @@
+adapter: 'postgresql'
+database: 'payday'
+username: 'norbas'
+password: 'norbas'

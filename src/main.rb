@@ -1,4 +1,4 @@
-require './config'
+require './config/application'
 
 csv = ReadCSV.new('wydatki.csv').call
 csv = FillTransactionDates.new(csv).call
