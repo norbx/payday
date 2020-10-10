@@ -15,6 +15,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'csv'
 require 'byebug'
+require 'active_record'
 
 Dir['./lib/**/*.rb'].sort.each { |file| require file }
 
