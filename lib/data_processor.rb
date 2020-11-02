@@ -1,10 +1,10 @@
-class FillTransactionDates
+class DataProcessor
   def initialize(csv)
     @csv = csv
     @last_date = Date.parse(csv['Data waluty'][1])
   end
 
-  def call
+  def process
     parse_dates
     fill_empty_dates
   end

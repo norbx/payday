@@ -1,4 +1,4 @@
-class GetMonthlyReport
+class Reports
   def initialize(csv, month)
     @csv = csv
     @month = month
@@ -6,7 +6,7 @@ class GetMonthlyReport
     @income = 0
   end
 
-  def call
+  def monthly_report
     csv.each do |row|
       next unless row['Parsed date'].month == month
 

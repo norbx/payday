@@ -1,5 +1,7 @@
 AllCops:
   NewCops: enable
+  Exclude:
+    - payday.rb 
 
 Style/Documentation:
   Enabled: false
