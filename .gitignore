@@ -1,6 +1,19 @@
+# Byebug
 .byebug_history
+
+# Temp files
 *.swp
+
+# Test file
 /*.csv
+
+# RSpec config 
 .rspec
-.ruby-version
+
+# Secrets
 .env
+
+# rbenv and bundler related stuff
+/vendor
+.bundle/
+.ruby-version
