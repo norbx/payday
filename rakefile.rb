@@ -3,7 +3,7 @@ task :payday do
 end
 
 task :c do
-  sh 'irb -r ./config/application'
+  sh 'bundle exec irb -r ./config/application'
 end
 
 namespace :db do
