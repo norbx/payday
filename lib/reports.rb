@@ -4,7 +4,7 @@ class Reports
     @month = month
     @expenses = 0
     @income = 0
-    @categories = categories.new(csv)
+    @categories = categories.new(csv, month)
   end
 
   def monthly_report

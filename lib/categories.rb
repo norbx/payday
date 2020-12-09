@@ -18,10 +18,11 @@ class Categories
     inne
   ].freeze
 
-  def initialize(csv)
+  def initialize(csv, month)
     @csv = csv
     @category = nil
     @report = {}
+    @month = month
   end
 
   def categorize
@@ -32,10 +33,16 @@ class Categories
       count_in_report(row)
       row['Category'] = @category
     end
-    @report
+    save_report
   end
 
   private
+
+  def save_report
+    report.each_pair do |category, value|
+      MonthlyReport.create!(category: category, value: value, month: month, year: 2020)
+    end
+  end
 
   def prompt_categories
     loop do
@@ -50,5 +57,5 @@ class Categories
     @report.key?(@category) ? @report[@category] += row['Kwota'].to_f : @report[@category] = row['Kwota'].to_f
   end
 
-  attr_reader :csv, :category
+  attr_reader :csv, :category, :report, :month
 end

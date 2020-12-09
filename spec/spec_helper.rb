@@ -13,9 +13,7 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'csv'
-require 'byebug'
-require 'active_record'
+require './config/application'
 
 Dir['./lib/**/*.rb'].sort.each { |file| require file }
 Dir['./spec/support/**/*.rb'].sort.each { |file| require file }
