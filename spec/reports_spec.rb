@@ -28,6 +28,10 @@ RSpec.describe Reports do
   describe '.categories_report' do
     before { allow($stdin).to receive(:gets).and_return('sport') }
 
+    it 'creates monthly categories report' do
+      expect { subject.categories_report }.to change { MonthlyReport.count }.by(1)
+    end
+
     it 'returns categories report' do
       expect(subject.categories_report).to be_a(Hash)
     end

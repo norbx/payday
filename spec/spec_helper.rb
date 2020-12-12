@@ -13,7 +13,8 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require './config/application'
+require 'csv'
+require 'active_record'
 
 Dir['./lib/**/*.rb'].sort.each { |file| require file }
 Dir['./spec/support/**/*.rb'].sort.each { |file| require file }
@@ -100,4 +101,23 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+
+  # Add naive test database setup.
+  config.before(:suite) do
+    ActiveRecord::Base.establish_connection(
+      adapter: :postgresql,
+      database: :payday_test,
+      username: ENV['DB_USERNAME'],
+      password: ENV['DB_PASSWORD']
+    )
+  end
+  #   # Load schema to database before each example
+  config.before(:example) do
+    require './db/schema'
+  end
+  #   # Destroy all objects after each example
+  config.after(:example) do
+    MonthlyReport.destroy_all
+    Category.destroy_all
+  end
 end
