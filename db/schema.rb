@@ -2,8 +2,8 @@ require './config/application'
 
 ActiveRecord::Schema.define do
   create_table :monthly_reports, force: true do |t|
-    t.integer :month
-    t.integer :year
+    t.date :from
+    t.date :to
     t.decimal :income, precision: 8, scale: 2, default: 0.0
     t.decimal :expense, precision: 8, scale: 2, default: 0.0
     t.timestamps

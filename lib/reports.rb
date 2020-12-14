@@ -1,12 +1,11 @@
 class Reports
-  def initialize(csv, month, year, categories = Categories)
+  def initialize(csv, categories = Categories, balance = Balance, date_from:, date_to:)
     @csv = csv
-    @month = month
-    @year = year
-    @income = 0
-    @expense = 0
-    @categories = categories.new(csv, month)
+    @date_from = date_from.to_date
+    @date_to = date_to.to_date
+    @categories = categories.new(csv, date_from, date_to)
     @categories_report = nil
+    @balance = balance.new(csv, date_from, date_to)
   end
 
   def create_report
@@ -17,18 +16,10 @@ class Reports
 
   private
 
-  attr_reader :csv, :month, :year, :categories, :income, :expense
+  attr_reader :csv, :categories, :balance, :date_from, :date_to
 
   def calculate_balance
-    csv.each do |row|
-      next unless row['Parsed date'].month == month
-
-      if row['Kwota'].to_f.positive?
-        @income += row['Kwota'].to_f
-      else
-        @expense += row['Kwota'].to_f
-      end
-    end
+    @balance = balance.calculate
   end
 
   def categorize
@@ -37,10 +28,10 @@ class Reports
 
   def save_report
     report = MonthlyReport.create!(
-      month: month,
-      year: year,
-      income: income,
-      expense: expense
+      from: date_from,
+      to: date_to,
+      income: balance[:income],
+      expense: balance[:expense]
     )
     @categories_report.each_pair do |category, amount|
       Category.create!(name: category, amount: amount, monthly_report: report)
