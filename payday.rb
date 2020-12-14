@@ -1,11 +1,7 @@
 require './config/application'
 
-reader = Reader
-data_processor = DataProcessor.new(reader.read_csv('./wydatki.csv'))
-reports = Reports.new(data_processor.process, 11)
+data = DataProcessor.new(Reader.read_csv('./wydatki_short.csv')).process
 
-income, expenses = reports.monthly_report
-puts [income, expenses]
+Reports.new(data, 10, 2020).create_report
 
-# categories = reports.categories_report
-# puts categories
+sh 'rake c'

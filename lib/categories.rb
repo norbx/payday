@@ -33,16 +33,10 @@ class Categories
       count_in_report(row)
       row['Category'] = @category
     end
-    save_report
+    report
   end
 
   private
-
-  def save_report
-    report.each_pair do |category, value|
-      MonthlyReport.create!(category: category, value: value, month: month, year: 2020)
-    end
-  end
 
   def prompt_categories
     loop do
