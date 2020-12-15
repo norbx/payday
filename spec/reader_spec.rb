@@ -11,7 +11,7 @@ RSpec.describe Reader do
     end
 
     it 'sets headers' do
-      expect(subject.read_csv(path).headers.count).to eq(11)
+      expect(subject.read_csv(path).headers.count).to eq(12)
     end
   end
 end
