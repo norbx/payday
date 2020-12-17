@@ -1,42 +1,32 @@
 class Preprocessor
-  def initialize(csv)
+  def initialize(csv, date_from, date_to)
     @csv = csv
+    @date_from = date_from.to_date
+    @date_to = date_to.to_date
   end
 
   def extract_dates
-    csv.each_with_index do |row, i|
-      next assign_date(row, parse(row['Data waluty'])) if first_date_missing?(row)
-      next assign_date(row, csv[i - 1]['Parsed date']) if date_missing?(row)
-
-      assign_date(row, parse(transaction_date(row).to_s))
+    csv.each_with_index do |row, index|
+      row['Parsed date'] = transaction_date(row, index).to_date
     end
+    csv.delete_if { |row| !row_in_range?(row) }
   end
 
   private
 
-  attr_reader :csv
+  attr_reader :csv, :date_from, :date_to
 
-  def first_date_missing?(row)
-    date_missing?(row) && row == csv[0]
+  def transaction_date(row, index)
+    return row['Data waluty']  if index.zero? && !matched_date(row)
+
+    matched_date(row) || csv[index - 1]['Parsed date']
   end
 
-  def date_missing?(row)
-    transaction_date(row).nil?
+  def matched_date(row)
+    row['Data i czas transakcji']&.match(/\d{4}-\d{2}-\d{2}/)&.to_s
   end
 
-  def first_row?(row)
-    row == csv[0]
-  end
-
-  def assign_date(row, date)
-    row['Parsed date'] = date
-  end
-
-  def parse(date)
-    Date.parse(date)
-  end
-
-  def transaction_date(row)
-    row['Data i czas transakcji']&.match(/\d{4}-\d{2}-\d{2}/)
+  def row_in_range?(row)
+    date_from <= row['Parsed date'] && row['Parsed date'] < date_to
   end
 end

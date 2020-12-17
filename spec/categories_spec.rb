@@ -3,10 +3,7 @@ require 'spec_helper'
 RSpec.describe Categories do
   include_context 'Processed CSV'
 
-  let(:date_from) { '2020-04-24' }
-  let(:date_to) { '2020-04-29' }
-
-  subject { described_class.new(processed_csv, date_from, date_to) }
+  subject { described_class.new(processed_csv) }
 
   describe '.categorize' do
     before { allow($stdin).to receive(:gets).and_return('sport') }

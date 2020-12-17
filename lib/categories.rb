@@ -18,18 +18,14 @@ class Categories
     inne
   ].freeze
 
-  def initialize(csv, date_from, date_to)
+  def initialize(csv)
     @csv = csv
     @category = nil
     @report = {}
-    @date_from = date_from.to_date
-    @date_to = date_to.to_date
   end
 
   def categorize
     csv.each do |row|
-      next unless between_dates?(row)
-
       print `clear`
       puts(row.map { |k, v| "#{k}: #{v}" })
       prompt_categories
@@ -41,10 +37,6 @@ class Categories
   end
 
   private
-
-  def between_dates?(row)
-    date_from <= row['Parsed date'] && row['Parsed date'] < date_to
-  end
 
   def prompt_categories
     loop do
@@ -59,5 +51,5 @@ class Categories
     @report.key?(@category) ? @report[@category] += row['Kwota'].to_f : @report[@category] = row['Kwota'].to_f
   end
 
-  attr_reader :csv, :category, :report, :date_from, :date_to
+  attr_reader :csv, :category, :report
 end
