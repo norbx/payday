@@ -1,0 +1,17 @@
+require './config/application'
+
+Category.find_or_create_by(name: 'sport')
+Category.find_or_create_by(name: 'codzienne')
+Category.find_or_create_by(name: 'ztm')
+Category.find_or_create_by(name: 'pkp')
+Category.find_or_create_by(name: 'leki')
+Category.find_or_create_by(name: 'bolt')
+Category.find_or_create_by(name: 'rozrywka')
+Category.find_or_create_by(name: 'praca')
+Category.find_or_create_by(name: 'miasto')
+Category.find_or_create_by(name: 'ciuchy')
+Category.find_or_create_by(name: 'rachunki')
+Category.find_or_create_by(name: 'czynsz')
+Category.find_or_create_by(name: 'wynagrodzenie')
+Category.find_or_create_by(name: 'inne')
+Category.find_or_create_by(name: 'zus')

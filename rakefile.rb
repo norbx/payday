@@ -10,4 +10,8 @@ namespace :db do
   task :create do
     ruby './db/schema.rb'
   end
+
+  task :seed do
+    ruby './db/seeds.rb'
+  end
 end
