@@ -10,9 +10,15 @@ ActiveRecord::Schema.define do
   end
 
   create_table :categories, force: true do |t|
-    t.references :monthly_report
     t.string :name
-    t.decimal :amount, precision: 8, scale: 2, default: 0.0
     t.timestamps
   end
+
+  create_table :expenses, force: true do |t|
+    t.date :date
+    t.decimal :amount, precision: 8, scale: 2, default: 0.0
+    t.references :category
+    t.references :monthly_report
+    t.timestamps
+  end 
 end

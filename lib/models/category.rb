@@ -1,3 +1,1 @@
-class Category < ActiveRecord::Base
-  belongs_to :monthly_report
-end
+class Category < ActiveRecord::Base; end
