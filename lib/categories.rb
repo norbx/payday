@@ -1,32 +1,26 @@
 class Categories
   def initialize(csv)
     @csv = csv
+    @printer = Printer.new
     @category = nil
   end
 
   def categorize
     csv.each do |row|
-      print `clear`
-      puts(row.map { |k, v| "#{k}: #{v}" })
-      prompt_categories
-      row['Category'] = @category
+      printer.print_row(row, headers)
+      row['Category'] = printer.prompt_until(categories)
     end
   end
 
   private
 
-  attr_reader :csv, :category
-
-  def prompt_categories
-    loop do
-      @category = $stdin.gets.chomp.downcase
-      break if categories.include?(category)
-
-      puts "Available categories: #{categories.join(', ')}"
-    end
-  end
+  attr_reader :csv, :category, :printer
 
   def categories
     @categories ||= Category.pluck(:name)
+  end
+
+  def headers
+    ['Parsed date', 'Lokalizacja', 'Kwota']
   end
 end
