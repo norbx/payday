@@ -16,7 +16,7 @@ RSpec.describe Reports do
     end
 
     it 'creates categories provided by the user' do
-      expect { subject.create_report }.to change { Category.count }.by(1)
+      expect { subject.create_report }.to change { Expense.count }.by(6)
     end
   end
 end

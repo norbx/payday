@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'stringio'
 
 RSpec.describe Categories do
   include_context 'Processed CSV'
@@ -6,22 +7,34 @@ RSpec.describe Categories do
   subject { described_class.new(processed_csv) }
 
   describe '.categorize' do
-    before { allow($stdin).to receive(:gets).and_return('sport') }
+    before do
+      io = StringIO.new
+      io.puts 'sport'
+      io.puts 'sport'
+      io.puts 'sport'
+      io.puts 'sport'
+      io.puts 'sport'
+      io.puts 'sport'
+      io.rewind
+
+      $stdin = io
+    end
+    after { $stdin = STDIN }
 
     it 'adds new column' do
       expect { subject.categorize }.to change { processed_csv.headers.size }.by(1)
     end
 
     it 'returns a hash' do
-      expect(subject.categorize).to be_a(Hash)
+      expect(subject.categorize).to be_a(CSV::Table)
     end
 
     it 'returns categorized expenses' do
-      expect(subject.categorize).to have_key('sport')
+      expect(subject.categorize.headers).to include('Category')
     end
 
     it 'sums expenses for each category' do
-      expect(subject.categorize['sport']).to eq(3.5)
+      expect(subject.categorize['sport']).to be_an(Array)
     end
   end
 end

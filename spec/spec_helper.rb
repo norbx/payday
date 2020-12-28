@@ -111,13 +111,10 @@ RSpec.configure do |config|
       password: ENV['DB_PASSWORD']
     )
   end
+
   #   # Load schema to database before each example
   config.before(:example) do
     require './db/schema'
-  end
-  #   # Destroy all objects after each example
-  config.after(:example) do
-    MonthlyReport.destroy_all
-    Category.destroy_all
+    require './db/seeds'
   end
 end

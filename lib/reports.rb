@@ -4,14 +4,15 @@ class Reports
     @date_from = date_from.to_date
     @date_to = date_to.to_date
     @categories = categories.new(csv)
-    @categories_report = nil
     @balance = balance.new(csv, date_from, date_to)
+    @report = nil
   end
 
   def create_report
     calculate_balance
     categorize
     save_report
+    save_expenses
   end
 
   private
@@ -23,18 +24,26 @@ class Reports
   end
 
   def categorize
-    @categories_report = categories.categorize
+    @categorized_csv = categories.categorize
   end
 
   def save_report
-    report = MonthlyReport.create!(
+    @report = MonthlyReport.create!(
       from: date_from,
       to: date_to,
       income: balance[:income],
       expense: balance[:expense]
     )
-    @categories_report.each_pair do |category, amount|
-      Category.create!(name: category, amount: amount, monthly_report: report)
+  end
+
+  def save_expenses
+    @categorized_csv.each do |row|
+      Expense.create!(
+        amount: row['Kwota'],
+        date: row['Parsed date'],
+        category: Category.find_by(name: row['Category']),
+        monthly_report: @report
+      )
     end
   end
 end
