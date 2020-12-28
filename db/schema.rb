@@ -20,5 +20,5 @@ ActiveRecord::Schema.define do
     t.references :category
     t.references :monthly_report
     t.timestamps
-  end 
+  end
 end
