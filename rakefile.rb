@@ -1,5 +1,5 @@
 task :payday do
-  ruby './payday.rb'
+  ruby './exe/payday.rb'
 end
 
 task :c do
