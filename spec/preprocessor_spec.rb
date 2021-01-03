@@ -45,8 +45,8 @@ RSpec.describe Preprocessor do
     context 'when transaction date is missing' do
       before { csv[3]['Data i czas transakcji'] = '' }
 
-      it 'fills the row transaction date with transaction date from previous row' do
-        expect(subject.extract_dates[3]['Parsed date']).to eq(csv[2]['Parsed date'])
+      it 'fills the parsed date with currency date' do
+        expect(subject.extract_dates[3]['Parsed date']).to eq(csv[3]['Data waluty'].to_date)
       end
     end
   end
