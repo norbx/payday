@@ -1,7 +1,7 @@
 class Categories
-  def initialize(csv)
+  def initialize(csv, printer: Printer.new)
     @csv = csv
-    @printer = Printer.new
+    @printer = printer
     @category = nil
   end
 

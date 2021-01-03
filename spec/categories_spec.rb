@@ -4,23 +4,14 @@ require 'stringio'
 RSpec.describe Categories do
   include_context 'Processed CSV'
 
-  subject { described_class.new(processed_csv) }
+  let(:printer) { double(Printer) }
+
+  before { allow(printer).to receive(:print_row) }
+  before { allow(printer).to receive(:prompt_until).and_return('sport') }
+
+  subject { described_class.new(processed_csv, printer: printer) }
 
   describe '.categorize' do
-    before do
-      io = StringIO.new
-      io.puts 'sport'
-      io.puts 'sport'
-      io.puts 'sport'
-      io.puts 'sport'
-      io.puts 'sport'
-      io.puts 'sport'
-      io.rewind
-
-      $stdin = io
-    end
-    after { $stdin = STDIN }
-
     it 'adds new column' do
       expect { subject.categorize }.to change { processed_csv.headers.size }.by(1)
     end

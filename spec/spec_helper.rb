@@ -113,7 +113,7 @@ RSpec.configure do |config|
   end
 
   #   # Load schema to database before each example
-  config.before(:example) do
+  config.before(:suite) do
     require './db/schema'
     require './db/seeds'
   end

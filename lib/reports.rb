@@ -1,5 +1,5 @@
 class Reports
-  def initialize(csv, categories = Categories, balance = Balance, date_from:, date_to:)
+  def initialize(csv, date_from:, date_to:, categories: Categories, balance: Balance)
     @csv = csv
     @date_from = date_from.to_date
     @date_to = date_to.to_date
