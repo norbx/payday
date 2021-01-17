@@ -8,10 +8,10 @@ end
 
 namespace :db do
   task :create do
-    ruby './db/schema.rb'
+    load './db/schema.rb'
   end
 
   task :seed do
-    ruby './db/seeds.rb'
+    load './db/seeds.rb'
   end
 end

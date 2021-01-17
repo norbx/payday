@@ -14,3 +14,5 @@ Bundler.require
 db_yml = YAML.safe_load(ERB.new(File.read('./config/database.yml')).result)
 
 ActiveRecord::Base.establish_connection(db_yml)
+
+load './db/seeds.rb'

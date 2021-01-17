@@ -1,8 +1,7 @@
 require './config/application'
 
-data = Preprocessor.new(Reader.read_csv('./wydatki.csv'), '2020-11-10', '2020-12-10').extract_dates
-sh 'rake db:seed'
+data = Preprocessor.new(Reader.read_csv('./wydatki_short.csv'), '2020-10-23', '2020-10-25').extract_dates
 
-Reports.new(data, date_from: '2020-11-10', date_to: '2020-12-10').create_report
+Reports.new(data, date_from: '2020-10-23', date_to: '2020-10-25').create_report
 
 sh 'rake c'
