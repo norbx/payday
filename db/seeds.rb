@@ -1,5 +1,3 @@
-require './config/application'
-
 Category.find_or_create_by(name: 'bonus')
 Category.find_or_create_by(name: 'codzienne')
 Category.find_or_create_by(name: 'transport')

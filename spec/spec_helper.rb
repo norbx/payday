@@ -19,6 +19,18 @@ require 'active_record'
 Dir['./lib/**/*.rb'].sort.each { |file| require file }
 Dir['./spec/support/**/*.rb'].sort.each { |file| require file }
 
+# Setup test database
+ActiveRecord::Base.establish_connection(
+  adapter: :postgresql,
+  database: :payday_test,
+  username: ENV['DB_USERNAME'],
+  password: ENV['DB_PASSWORD']
+)
+
+# Import database schema and seeds
+require './db/schema'
+require './db/seeds'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -101,20 +113,4 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
-
-  # Add naive test database setup.
-  config.before(:suite) do
-    ActiveRecord::Base.establish_connection(
-      adapter: :postgresql,
-      database: :payday_test,
-      username: ENV['DB_USERNAME'],
-      password: ENV['DB_PASSWORD']
-    )
-  end
-
-  #   # Load schema to database before each example
-  config.before(:suite) do
-    require './db/schema'
-    require './db/seeds'
-  end
 end

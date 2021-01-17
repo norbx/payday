@@ -1,5 +1,3 @@
-require './config/application'
-
 ActiveRecord::Schema.define do
   create_table :monthly_reports, force: true do |t|
     t.date :from
