@@ -1,4 +1,7 @@
+require './config/database'
 require './config/application'
+
+load './db/seeds.rb'
 
 puts 'Enter file path:'
 file_path = gets.chomp

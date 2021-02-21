@@ -1,3 +1,7 @@
+require 'active_record'
+require './config/application'
+require './config/database'
+
 task :payday do
   ruby './exe/payday.rb'
 end
