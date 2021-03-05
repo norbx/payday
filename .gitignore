@@ -17,3 +17,6 @@
 /vendor
 .bundle/
 .ruby-version
+
+# Rubymine
+.idea/
