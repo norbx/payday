@@ -20,3 +20,6 @@
 
 # Rubymine
 .idea/
+
+# exe/payday_test
+exe/payday_test.rb
