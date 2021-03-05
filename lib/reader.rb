@@ -1,17 +1,17 @@
 class Reader
   HEADERS = [
-    "Data operacji",
-    "Data waluty",
-    "Typ transakcji",
-    "Kwota",
-    "Waluta",
-    "Saldo po transakcji",
-    "Opis transakcji",
-    "Lokalizacja",
-    "Data i czas transakcji",
-    "Oryginalna kwota operacji",
-    "Numer operacji",
-    "Parsed date"
+    'Data operacji',
+    'Data waluty',
+    'Typ transakcji',
+    'Kwota',
+    'Waluta',
+    'Saldo po transakcji',
+    'Opis transakcji',
+    'Lokalizacja',
+    'Data i czas transakcji',
+    'Oryginalna kwota operacji',
+    'Numer operacji',
+    'Parsed date'
   ].freeze
 
   class << self

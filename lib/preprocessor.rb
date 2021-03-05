@@ -2,15 +2,15 @@ class Preprocessor
   def initialize(csv)
     @csv = csv
   end
-  
+
   def extract_dates
     csv.each do |row|
       row['Parsed date'] = matched_date(row) || row['Data waluty'].to_date
     end
   end
-  
+
   private
-  
+
   attr_reader :csv
 
   def matched_date(row)

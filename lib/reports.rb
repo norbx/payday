@@ -12,7 +12,6 @@ class Reports
     calculate_balance
     categorize
     save_report
-    save_expenses
   end
 
   private
@@ -34,16 +33,5 @@ class Reports
       income: balance[:income],
       expense: balance[:expense]
     )
-  end
-
-  def save_expenses
-    @categorized_csv.each do |row|
-      Expense.create!(
-        amount: row['Kwota'],
-        date: row['Parsed date'],
-        category: Category.find_by(name: row['Category']),
-        monthly_report: @report
-      )
-    end
   end
 end

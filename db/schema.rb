@@ -13,10 +13,16 @@ ActiveRecord::Schema.define do
   end
 
   create_table :expenses, force: true do |t|
-    t.date :date
+    t.date :transaction_date
     t.decimal :amount, precision: 8, scale: 2, default: 0.0
+    t.string :description
+    t.string :localization
+    t.string :referential_number
+    t.references :import
     t.references :category
     t.references :monthly_report
     t.timestamps
   end
+
+  add_index :expenses, [:transaction_date, :amount, :localization, :description], name: 'duplicated_expense_index', unique: true
 end

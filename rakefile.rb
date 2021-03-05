@@ -1,4 +1,3 @@
-require 'active_record'
 require './config/application'
 require './config/database'
 
@@ -7,7 +6,7 @@ task :payday do
 end
 
 task :c do
-  sh 'bundle exec irb -r ./config/application'
+  sh 'bundle exec irb -r ./config/application -r ./config/database'
 end
 
 namespace :db do
@@ -16,6 +15,7 @@ namespace :db do
   end
 
   task :seed do
+    
     load './db/seeds.rb'
   end
 end

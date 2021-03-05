@@ -13,10 +13,9 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'csv'
-require 'active_record'
+require './config/application'
+require 'database_cleaner/active_record'
 
-Dir['./lib/**/*.rb'].sort.each { |file| require file }
 Dir['./spec/support/**/*.rb'].sort.each { |file| require file }
 
 # Setup test database
@@ -113,4 +112,16 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+
+  # Clean database after each example
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
 end
