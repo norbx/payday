@@ -18,7 +18,6 @@ ActiveRecord::Schema.define do
     t.string :description
     t.string :localization
     t.string :referential_number
-    t.references :import
     t.references :category
     t.references :monthly_report
     t.timestamps
