@@ -1,21 +1,13 @@
 class Balance
-  def initialize(csv, date_from, date_to)
+  def initialize(csv)
     @csv = csv
-    @date_from = date_from.to_date
-    @date_to = date_to.to_date
     @income = 0
     @expense = 0
   end
 
   def calculate
     csv.each do |row|
-      next unless between_dates?(row)
-
-      if amount(row).positive?
-        @income += amount(row)
-      else
-        @expense += amount(row)
-      end
+      amount(row).positive? ? @income += amount(row) : @expense += amount(row)
     end
 
     balance
@@ -23,11 +15,7 @@ class Balance
 
   private
 
-  attr_reader :csv, :date_from, :date_to, :income, :expense
-
-  def between_dates?(row)
-    date_from <= row['Parsed date'] && row['Parsed date'] < date_to
-  end
+  attr_reader :csv, :income, :expense
 
   def amount(row)
     row['Kwota'].to_f

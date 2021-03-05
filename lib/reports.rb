@@ -4,7 +4,7 @@ class Reports
     @date_from = date_from.to_date
     @date_to = date_to.to_date
     @categories = categories.new(csv)
-    @balance = balance.new(csv, date_from, date_to)
+    @balance = balance.new(csv)
     @report = nil
   end
 
