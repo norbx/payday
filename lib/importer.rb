@@ -5,13 +5,13 @@ class Importer
 
   def import
     expenses = csv.map do |row|
-      Expense.new(
+      {
         transaction_date: transaction_date(row),
         amount: amount(row),
         description: description(row),
         localization: localization(row),
         referential_number: referential_number(row)
-      )
+      }
     end
 
     Expense.import(expenses, on_duplicate_key_ignore: true)
@@ -38,6 +38,6 @@ class Importer
   end
 
   def referential_number(row)
-    row['Oryginalna kwota']
+    row['Numer referencyjny']
   end
 end

@@ -23,5 +23,5 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
-  add_index :expenses, [:transaction_date, :amount, :localization, :description], name: 'duplicated_expense_index', unique: true
+  add_index :expenses, [:transaction_date, :amount, :localization, :description, :referential_number], name: 'duplicated_expense_index', unique: true
 end

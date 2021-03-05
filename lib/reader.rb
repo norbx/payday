@@ -9,7 +9,7 @@ class Reader
     'Opis transakcji',
     'Lokalizacja',
     'Data i czas transakcji',
-    'Oryginalna kwota operacji',
+    'Numer referencyjny',
     'Numer operacji',
     'Parsed date'
   ].freeze
