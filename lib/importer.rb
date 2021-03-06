@@ -10,11 +10,13 @@ class Importer
         amount: amount(row),
         description: description(row),
         localization: localization(row),
-        referential_number: referential_number(row)
+        referential_number: referential_number(row),
+        created_at: Time.current,
+        updated_at: Time.current
       }
     end
 
-    Expense.import(expenses, on_duplicate_key_ignore: true)
+    Expense.insert_all(expenses, unique_by: :duplicated_expense_index)
   end
 
   private

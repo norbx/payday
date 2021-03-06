@@ -20,15 +20,16 @@ RSpec.describe Importer do
     expect(expenses.all? { |e| e.localization.present? }).to be(true)
   end
 
-  context 'when a expense differentiates only in date' do
+  context 'when an expense is unique by date only' do
     before do
       description = processed_csv[-1]['Opis transakcji']
       localization = processed_csv[-1]['Lokalizacja']
       amount = processed_csv[-1]['Kwota']
+      referential_number = processed_csv[-1]['Numer referencyjny']
       transaction_date = Date.current
       row =  CSV::Row.new(
-        ['Parsed date', 'Opis transakcji', 'Kwota', 'Lokalizacja'],
-        [transaction_date, description, amount, localization]
+        ['Parsed date', 'Opis transakcji', 'Kwota', 'Lokalizacja', 'Numer referencyjny'],
+        [transaction_date, description, amount, localization, referential_number]
       )
 
       processed_csv << row
