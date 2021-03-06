@@ -10,6 +10,7 @@ gem 'irb', '~> 1.2', '>= 1.2.7', require: false
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'rake', '~> 13.0', '>= 13.0.1'
 gem 'activerecord-import', '~> 1.0', '>= 1.0.8'
+gem 'tty-prompt', '~> 0.23.0'
 
 group :test do
   gem 'rubocop', '~> 0.92.0'
