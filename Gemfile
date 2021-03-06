@@ -14,5 +14,5 @@ gem 'activerecord-import', '~> 1.0', '>= 1.0.8'
 group :test do
   gem 'rubocop', '~> 0.92.0'
   gem 'rspec', '~> 3.9'
-  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-active_record', '~> 2.0'
 end
