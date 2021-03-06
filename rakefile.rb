@@ -15,7 +15,6 @@ namespace :db do
   end
 
   task :seed do
-    
     load './db/seeds.rb'
   end
 end

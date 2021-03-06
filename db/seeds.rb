@@ -14,33 +14,33 @@ Category.find_or_create_by(name: 'wyjazdy')
 Category.find_or_create_by(name: 'oszczednosci')
 
 Expense.find_or_create_by(
-  transaction_date: Date.current, 
-  amount: 10.00, 
-  description: 'Tytuł: 010061097 74169501002520032452405', 
+  transaction_date: Date.current,
+  amount: 10.00,
+  description: 'Tytuł: 010061097 74169501002520032452405',
   localization: 'Lokalizacja: Kraj: POLSKA Miasto: WARSZAWA Adres: CARREFOUR SUPERMARKET',
   referential_number: 'Numer referencyjny: 00000056348396455',
   category: Category.first
 )
 Expense.find_or_create_by(
-  transaction_date: Date.current, 
-  amount: 15.00, 
-  description: 'Tytuł: 010061097 74169501002520032452405', 
+  transaction_date: Date.current,
+  amount: 15.00,
+  description: 'Tytuł: 010061097 74169501002520032452405',
   localization: 'Lokalizacja: Kraj: POLSKA Miasto: WARSZAWA Adres: CARREFOUR SUPERMARKET',
   referential_number: 'Numer referencyjny: 00000056348396455',
   category: Category.first
 )
 Expense.find_or_create_by(
-  transaction_date: 1.day.ago, 
-  amount: 5.38, 
-  description: 'Tytuł: 010061097 74169501002520032452405', 
+  transaction_date: 1.day.ago,
+  amount: 5.38,
+  description: 'Tytuł: 010061097 74169501002520032452405',
   localization: 'Lokalizacja: Kraj: POLSKA Miasto: WARSZAWA Adres: CARREFOUR SUPERMARKET',
   referential_number: 'Numer referencyjny: 00000056348396455',
   category: Category.second
 )
 Expense.find_or_create_by(
-  transaction_date: 1.day.from_now, 
-  amount: 150.00, 
-  description: 'Tytuł: 010061097 74169501002520032452405', 
+  transaction_date: 1.day.from_now,
+  amount: 150.00,
+  description: 'Tytuł: 010061097 74169501002520032452405',
   localization: 'Lokalizacja: Kraj: POLSKA Miasto: WARSZAWA Adres: CARREFOUR SUPERMARKET',
   referential_number: 'Numer referencyjny: 00000056348396455',
   category: Category.third

@@ -27,7 +27,7 @@ RSpec.describe Importer do
       amount = processed_csv[-1]['Kwota']
       referential_number = processed_csv[-1]['Numer referencyjny']
       transaction_date = Date.current
-      row =  CSV::Row.new(
+      row = CSV::Row.new(
         ['Parsed date', 'Opis transakcji', 'Kwota', 'Lokalizacja', 'Numer referencyjny'],
         [transaction_date, description, amount, localization, referential_number]
       )

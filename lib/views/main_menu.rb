@@ -1,12 +1,12 @@
 prompt = TTY::Prompt.new
 
-while(true) do
+loop do
   system('clear')
 
   action = prompt.select('What would you like to do?') do |menu|
     menu.choice 'Import expenses', 1
     menu.choice 'Create a report', 2
-    menu.choice 'Visualize expenses', 3, disabled: "(Available soon)"
+    menu.choice 'Visualize expenses', 3, disabled: '(Available soon)'
     menu.choice 'Exit', 4
   end
 
@@ -21,4 +21,3 @@ while(true) do
     exit
   end
 end
-

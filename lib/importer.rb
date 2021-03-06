@@ -4,7 +4,15 @@ class Importer
   end
 
   def import
-    expenses = csv.map do |row|
+    Expense.insert_all(expenses, unique_by: :duplicated_expense_index)
+  end
+
+  private
+
+  attr_reader :csv
+
+  def expenses
+    csv.map do |row|
       {
         transaction_date: transaction_date(row),
         amount: amount(row),
@@ -15,13 +23,7 @@ class Importer
         updated_at: Time.current
       }
     end
-
-    Expense.insert_all(expenses, unique_by: :duplicated_expense_index)
   end
-
-  private
-
-  attr_reader :csv
 
   def transaction_date(row)
     row['Parsed date']
