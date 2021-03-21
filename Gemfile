@@ -16,4 +16,5 @@ group :test do
   gem 'database_cleaner-active_record', '~> 2.0'
   gem 'rspec', '~> 3.9'
   gem 'rubocop', '~> 0.92.0'
+  gem 'factory_bot', '~> 6.1'
 end

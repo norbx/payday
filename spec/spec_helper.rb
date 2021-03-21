@@ -15,6 +15,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require './config/application'
 require 'database_cleaner/active_record'
+require 'factory_bot'
 
 Dir['./spec/support/**/*.rb'].sort.each { |file| require file }
 
@@ -28,7 +29,6 @@ ActiveRecord::Base.establish_connection(
 
 # Import database schema and seeds
 require './db/schema'
-require './db/seeds'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -123,5 +123,12 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
+  end
+
+  # Setup factory_bot
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    FactoryBot.find_definitions
   end
 end
