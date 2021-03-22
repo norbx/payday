@@ -7,5 +7,6 @@ require 'tty-prompt'
 
 Dir['./lib/*.rb'].sort.each { |file| require file }
 Dir['./lib/models/*.rb'].sort.each { |file| require file }
+Dir['./lib/categories/**/*.rb'].sort.each { |file| require file }
 
 Bundler.require

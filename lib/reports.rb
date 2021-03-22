@@ -9,18 +9,13 @@ class Reports
   end
 
   def create_report
-    calculate_balance
     categorize
     save_report
   end
 
   private
 
-  attr_reader :csv, :categories, :balance, :date_from, :date_to
-
-  def calculate_balance
-    @balance = balance.calculate
-  end
+  attr_reader :csv, :categories, :date_from, :date_to
 
   def categorize
     @categorized_csv = categories.categorize

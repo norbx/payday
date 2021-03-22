@@ -4,28 +4,35 @@ require 'stringio'
 RSpec.describe Categories do
   include_context 'Processed CSV'
 
-  let(:printer) { double(Printer) }
+  let(:row) { processed_csv[2] }
+  let(:value) { 'bonus' }
 
-  before { allow(printer).to receive(:print_row) }
-  before { allow(printer).to receive(:prompt_until).and_return('sport') }
+  before do
+    create(:category, name: 'bonus')
+    create(:category, name: 'codzienne')
+  end
 
-  subject { described_class.new(processed_csv, printer: printer) }
+  subject { described_class.categorize(row, value) }
 
-  describe '.categorize' do
-    it 'adds new column' do
-      expect { subject.categorize }.to change { processed_csv.headers.size }.by(1)
-    end
+  it 'returns the row' do
+    expect(subject).to be_a(CSV::Row)
+  end
 
-    it 'returns a hash' do
-      expect(subject.categorize).to be_a(CSV::Table)
-    end
+  it 'adds new column' do
+    expect { subject }.to change { row.headers.size }.by(1)
+  end
 
-    it 'returns categorized expenses' do
-      expect(subject.categorize.headers).to include('Category')
-    end
+  it 'assigns value to a rows category field' do
+    subject
 
-    it 'sums expenses for each category' do
-      expect(subject.categorize['sport']).to be_an(Array)
+    expect(row['category']).to eq(value)
+  end
+
+  context 'when the value is not included in categories' do
+    let(:value) { 'invalid' }
+
+    it 'returns nil' do
+      expect(subject).to be_nil
     end
   end
 end

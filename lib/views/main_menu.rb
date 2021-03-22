@@ -1,5 +1,9 @@
 prompt = TTY::Prompt.new
 
+# file_path = prompt.ask('Enter a csv spreadsheet path:', convert: :filepath)
+file_path = 'wydatki.csv'
+csv = Preprocessor.new(Reader.read_csv(file_path)).extract_dates
+
 loop do
   system('clear')
 
@@ -12,11 +16,14 @@ loop do
 
   case action
   when 1
-    file_path = prompt.ask('Enter a csv spreadsheet path:', convert: :filepath)
-    csv = Preprocessor.new(Reader.read_csv(file_path)).extract_dates
     Importer.new(csv).import
     prompt.say("\nCSV successfully imported.", color: :bright_cyan)
     prompt.keypress('Press any key to continue..')
+  when 2
+    # Categories::Story.new(csv).call
+    prompt.select("Select a category", Category.all, cycle: true, filter: true) do |menu|
+      binding.pry
+    end
   when 4
     exit
   end
