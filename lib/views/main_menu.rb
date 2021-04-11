@@ -14,8 +14,8 @@ loop do
   when 1
     file_path = prompt.ask('Enter a csv spreadsheet path:', convert: :filepath)
     csv = Preprocessor.new(Reader.read_csv(file_path)).extract_dates
-    Importer.new(csv).import
-    prompt.say("\nCSV successfully imported.", color: :bright_cyan)
+    import = Importer.new(csv).import
+    prompt.say("\nCSV successfully imported #{import.rows.count} rows", color: :bright_cyan)
     prompt.keypress('Press any key to continue..')
   when 4
     exit
