@@ -1,22 +1,24 @@
-prompt = TTY::Prompt.new
+printer = Printer.new
 
 loop do
   system('clear')
 
-  action = prompt.select('What would you like to do?') do |menu|
-    menu.choice 'Import expenses', 1
-    menu.choice 'Create a report', 2
-    menu.choice 'Visualize expenses', 3, disabled: '(Available soon)'
-    menu.choice 'Exit', 4
-  end
+  action = printer.main_menu
 
   case action
   when 1
-    file_path = prompt.ask('Enter a csv spreadsheet path:', convert: :filepath)
-    csv = Preprocessor.new(Reader.read_csv(file_path)).extract_dates
-    import = Importer.new(csv).import
-    prompt.say("\nCSV successfully imported #{import.rows.count} rows", color: :bright_cyan)
-    prompt.keypress('Press any key to continue..')
+    csv = Preprocessor.new(Reader.read_csv(printer.get_file_path)).extract_dates
+    row_count = Importer.new(csv).import
+    printer.successful_import(row_count)
+  when 2
+    Categories.new.categorize do |expense|
+      printer.print_expense(expense)
+      printer.divider
+
+      category = printer.select_category
+
+      expense.update!(category: category)
+    end
   when 4
     exit
   end

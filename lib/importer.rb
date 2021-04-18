@@ -4,7 +4,7 @@ class Importer
   end
 
   def import
-    Expense.insert_all(expenses, unique_by: :duplicated_expense_index)
+    Expense.insert_all(expenses, unique_by: :duplicated_expense_index).rows.size
   end
 
   private
