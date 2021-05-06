@@ -1,9 +1,7 @@
 ActiveRecord::Schema.define do
-  create_table :monthly_reports, force: true do |t|
+  create_table :reports, force: true do |t|
     t.date :from
     t.date :to
-    t.decimal :income, precision: 8, scale: 2, default: 0.0
-    t.decimal :expense, precision: 8, scale: 2, default: 0.0
     t.timestamps
   end
 
@@ -19,7 +17,7 @@ ActiveRecord::Schema.define do
     t.string :localization
     t.string :referential_number
     t.references :category
-    t.references :monthly_report
+    t.references :report
     t.timestamps
   end
 
