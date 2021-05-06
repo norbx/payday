@@ -8,7 +8,8 @@ class Printer
     prompt.select('What would you like to do?') do |menu|
       menu.choice 'Import expenses', 1
       menu.choice 'Categorize', 2
-      menu.choice 'Visualize expenses', 3, disabled: '(Available soon)'
+      menu.choice 'Create report', 3
+      menu.choice 'Visualize expenses', 4, disabled: '(Available soon)'
       menu.choice 'Exit', 4
     end
   end
@@ -27,8 +28,14 @@ class Printer
     prompt.say "Description: ".send(theme) + "#{expense.description}"
   end
 
-  def prompt
-    $stdin.gets.chomp.downcase
+  def prompt(message)
+    prompt.ask(message).chomp.downcase
+  end
+
+  def prompt_date(message)
+    prompt.ask(message).chomp.to_date
+  rescue Date::Error
+    retry
   end
 
   def get_file_path
@@ -37,6 +44,11 @@ class Printer
 
   def successful_import(row_count)
     prompt.say("\nCSV successfully imported #{row_count} rows", color: :bright_cyan)
+    prompt.keypress('Press any key to continue..')
+  end
+
+  def successful_report
+    prompt.say("\nReport successfully created", color: :bright_cyan)
     prompt.keypress('Press any key to continue..')
   end
 

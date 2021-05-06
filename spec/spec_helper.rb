@@ -16,6 +16,7 @@
 require './config/application'
 require 'database_cleaner/active_record'
 require 'factory_bot'
+require 'faker'
 
 Dir['./spec/support/**/*.rb'].sort.each { |file| require file }
 
@@ -32,6 +33,8 @@ require './db/schema'
 require './db/seeds'
 
 RSpec.configure do |config|
+  # use documentation formatter
+  config.formatter = :documentation
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

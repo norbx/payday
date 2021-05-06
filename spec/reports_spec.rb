@@ -1,19 +1,47 @@
 require 'spec_helper'
 
 RSpec.describe Reports do
-  include_context 'Processed CSV'
+  let!(:report) { create(:report, from: 2.months.ago, to: 1.month.ago) }
 
-  let(:categories) { double(Categories) }
-  let(:categories_instance) { Categories.new(processed_csv) }
+  subject { described_class.new(payday: payday) }
 
-  before { allow(categories).to receive(:new).with(processed_csv).and_return(categories_instance) }
-  before { allow(categories_instance).to receive(:categorize).and_return(processed_csv) }
+  let(:payday) { 3.days.ago }
 
-  subject { described_class.new(processed_csv, categories: categories, date_from: '2020-04-25', date_to: '2020-04-29') }
+  it 'returns a report' do
+    expect(subject.call).to be_a(Report)
+  end
 
-  describe '.create_report' do
-    it 'creates a monthly report' do
-      expect { subject.create_report }.to change { MonthlyReport.count }.by(1)
-    end
+  it 'saves a monthly report' do
+    expect { subject.call }.to change { Report.count }.by(1)
+  end
+
+  it 'adds existing unreported expenses' do
+    create_list(:expense, 2, transaction_date: 5.days.ago, report: nil)
+
+    expect(subject.call.expenses.reload.count).to eq(2)
+  end
+
+  it 'does not add reported or after payday expenses' do
+    create_list(:expense, 2, transaction_date: 1.day.from_now, report: nil)
+    create_list(:expense, 2, :with_report, transaction_date: 5.days.ago)
+
+    expect(subject.call.expenses.reload.count).to eq(0)
+  end
+
+  it 'report\'s to date is payday - 1.day' do
+    expect(subject.call.to).to eq(payday.to_date - 1.day)
+  end
+
+  it 'report\'s from date is last report\'s to date' do
+    last_report = create(:report, to: 5.days.ago)
+
+    expect(subject.call.from.to_date).to eq(last_report.to + 1.day)
+  end
+
+  it 'report\'s from date is a date of the first unreported expense if there is no previous report' do
+    report.destroy!
+    expense = create(:expense)
+
+    expect(subject.call.from.to_date).to eq(expense.transaction_date)
   end
 end

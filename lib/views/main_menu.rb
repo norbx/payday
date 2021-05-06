@@ -19,6 +19,10 @@ loop do
 
       expense.update!(category: category)
     end
+  when 3
+    payday = printer.prompt_date("Please enter payday date:")
+    Reports.new(payday: payday).call
+    printer.successful_report
   when 4
     exit
   end

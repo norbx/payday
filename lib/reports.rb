@@ -1,37 +1,29 @@
 class Reports
-  def initialize(csv, date_from:, date_to:, categories: Categories, balance: Balance)
-    @csv = csv
-    @date_from = date_from.to_date
-    @date_to = date_to.to_date
-    @categories = categories.new(csv)
-    @balance = balance.new(csv)
-    @report = nil
+  def initialize(payday:)
+    @payday = payday
   end
 
-  def create_report
-    calculate_balance
-    categorize
-    save_report
+  def call
+    Report.create!(from: date_from, to: payday, expenses: expenses)
   end
 
   private
 
-  attr_reader :csv, :categories, :balance, :date_from, :date_to
+  def date_from
+    return last_report_date.beginning_of_day + 1.day if last_report_date.present?
 
-  def calculate_balance
-    @balance = balance.calculate
+    Expense.first_unreported
   end
 
-  def categorize
-    @categorized_csv = categories.categorize
+  def last_report_date
+    @last_report_date ||= Report.last_report_date
   end
 
-  def save_report
-    @report = MonthlyReport.create!(
-      from: date_from,
-      to: date_to,
-      income: balance[:income],
-      expense: balance[:expense]
-    )
+  def payday
+    (@payday - 1.day).end_of_day
+  end
+
+  def expenses
+    Expense.unreported.for_date(date_from..payday)
   end
 end
