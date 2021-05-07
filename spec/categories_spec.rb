@@ -9,5 +9,4 @@ RSpec.describe Categories do
   it 'returns expenses iterator' do
     expect(subject.categorize).to be_a(Enumerator)
   end
-
 end
