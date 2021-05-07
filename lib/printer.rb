@@ -22,10 +22,10 @@ class Printer
 
   def print_expense(expense)
     print `clear`
-    prompt.say "Transaction date: ".send(theme) + "#{expense.transaction_date}"
-    prompt.say "Amount: ".send(theme) + "#{expense.amount}"
-    prompt.say "Localization: ".send(theme) + "#{expense.localization}"
-    prompt.say "Description: ".send(theme) + "#{expense.description}"
+    prompt.say 'Transaction date: '.send(theme) + expense.transaction_date.to_s
+    prompt.say 'Amount: '.send(theme) + expense.amount.to_s
+    prompt.say 'Localization: '.send(theme) + expense.localization.to_s
+    prompt.say 'Description: '.send(theme) + expense.description.to_s
   end
 
   def prompt(message)
@@ -38,7 +38,7 @@ class Printer
     retry
   end
 
-  def get_file_path
+  def file_path
     prompt.ask('Enter a csv spreadsheet path:', convert: :filepath)
   end
 
@@ -60,5 +60,5 @@ class Printer
 
   private
 
-  attr_reader :prompt, :theme
+  attr_reader :theme
 end

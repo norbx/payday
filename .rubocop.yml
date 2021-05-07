@@ -5,7 +5,11 @@ inherit_mode:
 AllCops:
   NewCops: enable
   Exclude:
-    - payday.rb 
+    - payday.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - lib/printer.rb
 
 Metrics/BlockLength:
   Exclude:
