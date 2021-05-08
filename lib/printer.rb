@@ -28,10 +28,6 @@ class Printer
     prompt.say 'Description: '.send(theme) + expense.description.to_s
   end
 
-  def prompt(message)
-    prompt.ask(message).chomp.downcase
-  end
-
   def prompt_date(message)
     prompt.ask(message).chomp.to_date
   rescue Date::Error
@@ -60,5 +56,5 @@ class Printer
 
   private
 
-  attr_reader :theme
+  attr_reader :prompt, :theme
 end
