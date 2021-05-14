@@ -1,4 +1,4 @@
 adapter: postgresql
-database: payday_development
+database: payday_<%= ENV['ENVIRONMENT'] %>
 username: <%= ENV['DB_USERNAME'] %>
 password: <%= ENV['DB_PASSWORD'] %>
