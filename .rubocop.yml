@@ -5,7 +5,12 @@ inherit_mode:
 AllCops:
   NewCops: enable
   Exclude:
-    - payday.rb 
+    - payday.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - lib/printer.rb
+    - lib/plots/*.rb
 
 Metrics/BlockLength:
   Exclude:
@@ -13,6 +18,8 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Max: 15
+  Exclude:
+    - lib/plots/*.rb
 
 Style/Documentation:
   Enabled: false

@@ -7,7 +7,7 @@ loop do
 
   case action
   when 1
-    csv = Preprocessor.new(Reader.read_csv(printer.get_file_path)).extract_dates
+    csv = Preprocessor.new(Reader.read_csv(printer.file_path)).extract_dates
     row_count = Importer.new(csv).import
     printer.successful_import(row_count)
   when 2
@@ -20,10 +20,12 @@ loop do
       expense.update!(category: category)
     end
   when 3
-    payday = printer.prompt_date("Please enter payday date:")
+    payday = printer.prompt_date('Please enter payday date:')
     Reports.new(payday: payday).call
     printer.successful_report
   when 4
+    printer.plots
+  when 5
     exit
   end
 end

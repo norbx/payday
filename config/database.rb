@@ -1,6 +1,5 @@
 require 'erb'
 require 'yaml'
-require 'active_record'
 
 ENV['ENVIRONMENT'] = 'production' if production_branch?
 
