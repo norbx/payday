@@ -18,7 +18,7 @@ require 'database_cleaner/active_record'
 require 'factory_bot'
 require 'faker'
 
-Dir['./spec/support/**/*.rb'].sort.each { |file| require file }
+Dir['./spec/support/**/*.rb'].each { |file| require file }
 
 # Setup test database
 ActiveRecord::Base.establish_connection(
