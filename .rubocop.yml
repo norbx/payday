@@ -10,6 +10,7 @@ AllCops:
 Metrics/AbcSize:
   Exclude:
     - lib/printer.rb
+    - lib/plots/*.rb
 
 Metrics/BlockLength:
   Exclude:
@@ -17,6 +18,8 @@ Metrics/BlockLength:
 
 Metrics/MethodLength:
   Max: 15
+  Exclude:
+    - lib/plots/*.rb
 
 Style/Documentation:
   Enabled: false

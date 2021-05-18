@@ -24,6 +24,8 @@ loop do
     Reports.new(payday: payday).call
     printer.successful_report
   when 4
+    printer.plots
+  when 5
     exit
   end
 end

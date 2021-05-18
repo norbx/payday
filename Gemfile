@@ -7,6 +7,7 @@ gem 'activerecord', '~> 6.1', '>= 6.1.3'
 gem 'activerecord-import', '~> 1.0', '>= 1.0.8'
 gem 'colorize', '~> 0.8.1'
 gem 'dotenv', '~> 2.7', '>= 2.7.6'
+gem 'gnuplot', '~> 2.6', '>= 2.6.2'
 gem 'irb', '~> 1.2', '>= 1.2.7', require: false
 gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'pry', '~> 0.14.0'

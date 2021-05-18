@@ -9,8 +9,8 @@ class Printer
       menu.choice 'Import expenses', 1
       menu.choice 'Categorize', 2
       menu.choice 'Create report', 3
-      menu.choice 'Visualize expenses', 4, disabled: '(Available soon)'
-      menu.choice 'Exit', 4
+      menu.choice 'Visualize expenses', 4
+      menu.choice 'Exit', 5
     end
   end
 
@@ -51,6 +51,17 @@ class Printer
   def select_category
     prompt.select('Select category', per_page: 100, filter: true, cycle: true, active_color: theme) do |menu|
       Category.all.each { |category| menu.choice category.name.capitalize, category }
+    end
+  end
+
+  def plots
+    loop do
+      print `clear`
+      option = prompt.select('Choose plot', cycle: true, active_color: theme) do |menu|
+        menu.choice 'Daily plot', -> { Plots::Daily.call }
+        menu.choice 'Return to previous menu', 9
+      end
+      break if option == 9
     end
   end
 
