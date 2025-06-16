@@ -1,0 +1,7 @@
+<div>
+  <%= form_with url: imports_path, method: :post, local: true, html: { multipart: true } do |form| %>
+      <%= form.label :csv_file, "Upload CSV file:", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white", for: "file_input" %>
+      <%= form.file_field :csv_file, accept: '.csv', id: "file_input", type: "file", class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" %>
+      <%= form.submit "Import CSV", class: "inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition" %>
+  <% end %>
+</div>

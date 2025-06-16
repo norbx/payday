@@ -1,0 +1,4 @@
+pl:
+  imports:
+    flash:
+      missing_file: "Brak pliku do przesłania."
