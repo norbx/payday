@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_13_112637) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_16_180357) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,7 +34,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_13_112637) do
   end
 
   create_table "expenses_imports", force: :cascade do |t|
-    t.date "imported_at", null: false
     t.string "state", default: "pending", null: false
     t.string "file_name", null: false
     t.datetime "created_at", null: false

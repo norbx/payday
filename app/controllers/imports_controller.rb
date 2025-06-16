@@ -3,6 +3,15 @@ class ImportsController < ApplicationController
   end
 
   def create
-    redirect_to imports_path, notice: t("imports.flash.missing_file") unless params[:csv_file].present?
+    return redirect_to(imports_path, notice: t("imports.flash.missing_file")) unless params[:csv_file].present?
+
+    ImportExpenses.call(import_params[:csv_file], import_params[:csv_file].original_filename)
+    redirect_to(imports_path, notice: t("imports.flash.success"))
+  end
+
+  private
+
+  def import_params
+    params.permit(:csv_file)
   end
 end
