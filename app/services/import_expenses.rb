@@ -23,33 +23,15 @@ class ImportExpenses < BaseService
       @import ||= ExpensesImport.create!(file_name: @filename)
       @smarter_csv ||= SmarterCSV.process(@csv_file, chunk_size: 1000)
 
-      if (MBANK_KEYS.values - @smarter_csv.first.first.keys).empty?
+      if mbank_csv?
         @smarter_csv.each do |chunk|
-          Expense.insert_all(
-            chunk.map do |expense|
-              {
-                date: expense[:data_operacji],
-                description: expense[:opis_operacji],
-                amount: expense[:kwota].to_f,
-                category_id: find_category(expense[:kategoria]),
-                expenses_import_id: @import.id
-              }
-            end
-          )
+          expenses = chunk.map { mbank_hash(_1) }
+          Expense.insert_all(expenses)
         end
-      elsif (PKOBP_KEYS.values - @smarter_csv.first.first.keys).empty?
+      elsif pkobp_csv?
         @smarter_csv.each do |chunk|
-          Expense.insert_all(
-            chunk.map do |expense|
-              {
-                date: expense[:data_operacji],
-                description: expense[:opis_operacji],
-                amount: expense[:kwota].to_f,
-                category_id: find_category(expense[:rodzaj]),
-                expenses_import_id: @import.id
-              }
-            end
-          )
+          expenses = chunk.map { pkobp_hash(_1) }
+          Expense.insert_all(expenses)
         end
       else
         raise I18n.t("imports.unsupported_format")
@@ -66,5 +48,33 @@ class ImportExpenses < BaseService
 
     category = Category.find_or_create_by(name: name.strip)
     category.id
+  end
+
+  def mbank_hash(expense)
+    {
+      date: expense[:data_operacji],
+      description: expense[:opis_operacji],
+      amount: expense[:kwota].to_f,
+      category_id: find_category(expense[:kategoria]),
+      expenses_import_id: @import.id
+    }
+  end
+
+  def pkobp_hash(expense)
+    {
+      date: expense[:data_operacji],
+      description: expense[:opis_operacji],
+      amount: expense[:kwota].to_f,
+      category_id: find_category(expense[:rodzaj]),
+      expenses_import_id: @import.id
+    }
+  end
+
+  def mbank_csv?
+    (MBANK_KEYS.values - @smarter_csv.flatten.first.keys).empty?
+  end
+
+  def pkobp_csv?
+    (PKOBP_KEYS.values - @smarter_csv.flatten.first.keys).empty?
   end
 end
