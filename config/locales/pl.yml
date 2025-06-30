@@ -1,5 +1,6 @@
 pl:
   imports:
+    unsupported_format: "Nieobsługiwany format pliku CSV. Proszę użyć formatu MBank lub PKO BP."
     flash:
       missing_file: "Brak pliku do przesłania."
       success: "Plik przesłany pomyślnie."

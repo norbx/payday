@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Import Expenses', type: :system do
-  let(:csv_file) { fixture_file_upload('spec/fixtures/expenses.csv', 'text/csv') }
+  let(:csv_file) { fixture_file_upload('spec/fixtures/mbank_expenses.csv', 'text/csv') }
 
   it 'imports expenses from a CSV file' do
     visit imports_path
