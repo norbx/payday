@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_16_180357) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_30_205544) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,6 +30,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_180357) do
     t.bigint "category_id"
     t.bigint "expenses_import_id"
     t.index ["category_id"], name: "index_expenses_on_category_id"
+    t.index ["date", "description", "amount"], name: "expenses_unique_index", unique: true
     t.index ["expenses_import_id"], name: "index_expenses_on_expenses_import_id"
   end
 

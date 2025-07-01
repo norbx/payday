@@ -26,12 +26,12 @@ class ImportExpenses < BaseService
       if mbank_csv?
         @smarter_csv.each do |chunk|
           expenses = chunk.map { mbank_hash(_1) }
-          Expense.insert_all(expenses)
+          Expense.insert_all(expenses, unique_by: :expenses_unique_index)
         end
       elsif pkobp_csv?
         @smarter_csv.each do |chunk|
           expenses = chunk.map { pkobp_hash(_1) }
-          Expense.insert_all(expenses)
+          Expense.insert_all(expenses, unique_by: :expenses_unique_index)
         end
       else
         raise I18n.t("imports.unsupported_format")
@@ -53,7 +53,7 @@ class ImportExpenses < BaseService
   def mbank_hash(expense)
     {
       date: expense[:data_operacji],
-      description: expense[:opis_operacji],
+      description: expense[:opis_operacji] || "Brak opisu",
       amount: expense[:kwota].to_f,
       category_id: find_category(expense[:kategoria]),
       expenses_import_id: @import.id
@@ -63,7 +63,7 @@ class ImportExpenses < BaseService
   def pkobp_hash(expense)
     {
       date: expense[:data_operacji],
-      description: expense[:opis_operacji],
+      description: expense[:opis_transakcji] || "Brak opisu",
       amount: expense[:kwota].to_f,
       category_id: find_category(expense[:rodzaj]),
       expenses_import_id: @import.id
