@@ -1,9 +1,9 @@
 class ImportExpenses < BaseService
   MBANK_KEYS = {
-    date: :data_operacji,
-    description: :opis_operacji,
-    category: :kategoria,
-    amount: :kwota
+    date: "#data_operacji".to_sym,
+    description: "#opis_operacji".to_sym,
+    category: "#kategoria".to_sym,
+    amount: "#kwota".to_sym,
   }.freeze
 
   PKOBP_KEYS = {
@@ -46,16 +46,15 @@ class ImportExpenses < BaseService
   def find_category(name)
     return if name.blank?
 
-    category = Category.find_or_create_by(name: name.strip)
-    category.id
+    Category.find_by(name: name.strip)&.id
   end
 
   def mbank_hash(expense)
     {
-      date: expense[:data_operacji],
-      description: expense[:opis_operacji] || "Brak opisu",
-      amount: expense[:kwota].to_f,
-      category_id: find_category(expense[:kategoria]),
+      date: expense[MBANK_KEYS[:date]],
+      description: expense[MBANK_KEYS[:description]].squeeze(" ")|| "Brak opisu",
+      amount: expense[MBANK_KEYS[:amount]].to_f,
+      category_id: find_category(expense[MBANK_KEYS[:category]]),
       expenses_import_id: @import.id
     }
   end
