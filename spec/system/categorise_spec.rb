@@ -9,14 +9,15 @@ RSpec.describe "Categorise expenses", type: :system, js: true do
 
   before do
     driven_by(:selenium_chrome_headless)
-  end
 
-  it "shows the first expense and categories, and assigns a category" do
     visit categorise_path
+
     expect(page).to have_content("Lunch")
     expect(page).to have_button("Food")
     expect(page).to have_button("Transport")
+  end
 
+  it "shows the first expense and categories, and assigns a category" do
     click_button "Food"
     click_button "Zapisz"
 
@@ -25,9 +26,21 @@ RSpec.describe "Categorise expenses", type: :system, js: true do
   end
 
   it "categorises all expenses and shows completion message" do
-    visit categorise_path
     click_button "Food"
+
+    expect(page).to have_content("Bus")
     click_button "Transport"
-    expect(page).to have_content("All 2 expenses categorised.")
+
+    expect(page).to have_content("Wszystkie 2 wydatków skategoryzowane, brawo!")
+  end
+
+  it "navigates through expenses using next and previous buttons" do
+    find('[data-testid="next-button"]').click
+    expect(page).to have_content("Bus")
+    expect(page).not_to have_content("Lunch")
+
+    find('[data-testid="previous-button"]').click
+    expect(page).to have_content("Lunch")
+    expect(page).not_to have_content("Bus")
   end
 end

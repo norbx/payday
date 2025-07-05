@@ -15,6 +15,16 @@
     <!-- Stimulus will inject current expense here -->
   </div>
 
+  <!-- Navigation Buttons -->
+  <div class="flex justify-between items-center mt-2">
+    <button type="button" data-action="categorise#previous" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-lg" data-testid="previous-button">
+      &#8592;
+    </button>
+    <button type="button" data-action="categorise#next" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1 rounded text-lg" data-testid="next-button">
+      &#8594;
+    </button>
+  </div>
+
   <!-- Final Submission Form -->
   <form
     action="<%= categorise_path %>"

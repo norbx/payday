@@ -20,8 +20,11 @@ export default class extends Controller {
 
    showCurrentExpense() {
     const current = this.expenses[this.index]
+    const categoryId = this.assignments[current?.id]
+    const categoryName = categoryId ? this.categories.find(cat => cat.id === categoryId).name : null
+
     if (!current) {
-      this.progressTarget.innerText = `All ${this.expenses.length} expenses categorised.`
+      this.progressTarget.innerText = `Wszystkie ${this.expenses.length} wydatków skategoryzowane, brawo!`
       return
     }
 
@@ -29,6 +32,7 @@ export default class extends Controller {
       <div class="p-4 border rounded shadow-sm bg-white">
         <h3 class="text-lg font-medium">${current.description}</h3>
         <p class="text-gray-700">${current.amount} zł z dnia ${current.date}</p>
+        ${categoryId? `<p class="text-gray-500">Kategoria: ${categoryName}</p>` : ""}
         <div class="mt-4 space-x-2">
           ${this.categories.map(cat => `
             <button
@@ -45,6 +49,20 @@ export default class extends Controller {
     `
 
     this.progressTarget.innerText = `Kategoryzujesz ${this.index + 1} z ${this.expenses.length} wydatków`
+  }
+
+  next() {
+    if (this.index < this.expenses.length - 1) {
+      this.index++
+      this.showCurrentExpense()
+    }
+  }
+
+  previous() {
+    if (this.index > 0) {
+      this.index--
+      this.showCurrentExpense()
+    }
   }
 
   selectCategory(event) {
