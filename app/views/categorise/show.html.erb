@@ -1,0 +1,34 @@
+<div
+  data-controller="categorise"
+  data-categorise-expenses-value="<%= @expenses.to_json %>"
+  data-categorise-categories-value="<%= @categories.to_json %>"
+  class="max-w-xl mx-auto mt-10 space-y-6"
+>
+
+  <!-- Progress Indicator -->
+  <div data-categorise-target="progress" class="text-sm text-gray-500 font-medium">
+    Loading...
+  </div>
+
+  <!-- Expense Display -->
+  <div data-categorise-target="expense" class="bg-gray-50 p-4 rounded shadow">
+    <!-- Stimulus will inject current expense here -->
+  </div>
+
+  <!-- Final Submission Form -->
+  <form
+    action="<%= categorise_path %>"
+    method="POST"
+    data-categorise-target="form"
+    class="flex justify-end"
+  >
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <button
+      type="submit"
+      data-action="categorise#submit"
+      class="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
+    >
+      Submit expenses
+    </button>
+  </form>
+</div>

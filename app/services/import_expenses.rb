@@ -3,7 +3,7 @@ class ImportExpenses < BaseService
     date: "#data_operacji".to_sym,
     description: "#opis_operacji".to_sym,
     category: "#kategoria".to_sym,
-    amount: "#kwota".to_sym,
+    amount: "#kwota".to_sym
   }.freeze
 
   PKOBP_KEYS = {
