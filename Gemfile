@@ -22,6 +22,7 @@ gem "smarter_csv", "~> 1.14", ">= 1.14.4"
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "brakeman", require: false
+  gem "factory_bot_rails", "~> 6.5"
   gem "capybara", "~> 3.40"
   gem "rubocop-rails-omakase", require: false
   gem "rspec-rails", "~> 8.0"
