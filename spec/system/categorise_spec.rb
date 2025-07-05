@@ -18,7 +18,7 @@ RSpec.describe "Categorise expenses", type: :system, js: true do
     expect(page).to have_button("Transport")
 
     click_button "Food"
-    click_button "Submit expenses"
+    click_button "Zapisz"
 
     expect(page).to have_content("Bus")
     expect(expense1.reload.category).to eq(category1)

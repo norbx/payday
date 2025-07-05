@@ -9,9 +9,9 @@ class CategoriseController < ApplicationController
 
     if updates.any?
       Expense.upsert_all(updates, unique_by: :id)
-      flash[:notice] = "Expenses categorized successfully."
+      flash[:notice] = I18n.t("categorise.flash.success", count: updates.size)
     else
-      flash[:alert] = "No expenses were submitted."
+      flash[:alert] = I18n.t("categorise.flash.no_updates")
     end
 
     redirect_to categorise_path

@@ -28,7 +28,7 @@ export default class extends Controller {
     this.expenseTarget.innerHTML = `
       <div class="p-4 border rounded shadow-sm bg-white">
         <h3 class="text-lg font-medium">${current.description}</h3>
-        <p class="text-gray-700">${current.amount} on ${current.date}</p>
+        <p class="text-gray-700">${current.amount} zł z dnia ${current.date}</p>
         <div class="mt-4 space-x-2">
           ${this.categories.map(cat => `
             <button
@@ -44,7 +44,7 @@ export default class extends Controller {
       </div>
     `
 
-    this.progressTarget.innerText = `Categorizing ${this.index + 1} of ${this.expenses.length}`
+    this.progressTarget.innerText = `Kategoryzujesz ${this.index + 1} z ${this.expenses.length} wydatków`
   }
 
   selectCategory(event) {

@@ -4,3 +4,10 @@ pl:
     flash:
       missing_file: "Brak pliku do przesłania."
       success: "Plik przesłany pomyślnie."
+  categorise:
+    form:
+      submit: "Zapisz"
+    flash:
+      success: "Skategoryzowano %{count} wydatków."
+      no_updates: "Brak wydatków do zapisania."
+
