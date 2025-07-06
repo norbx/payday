@@ -33,13 +33,13 @@ export default class extends Controller {
         <h3 class="text-lg font-medium">${current.description}</h3>
         <p class="text-gray-700">${current.amount} zł z dnia ${current.date}</p>
         ${categoryId? `<p class="text-gray-500">Kategoria: ${categoryName}</p>` : ""}
-        <div class="mt-4 space-x-2">
+        <div class="mt-4 grid grid-cols-1 gap-2">
           ${this.categories.map(cat => `
             <button
               type="button"
-              class="bg-blue-500 hover:bg-blue-600 text-black px-3 py-1 rounded text-sm"
+              class="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm font-semibold transition"
               data-categorise-category-id-param="${cat.id}"
-              data-action="click->categorise#selectCategory"
+              data-action="categorise#selectCategory"
             >
               ${cat.name}
             </button>
