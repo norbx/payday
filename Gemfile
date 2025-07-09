@@ -24,7 +24,7 @@ group :development, :test do
   gem "brakeman", require: false
   gem "factory_bot_rails", "~> 6.5"
   gem "capybara", "~> 3.40"
-  gem "rubocop-rails", require: false
+  gem "rubocop-rails-omakase", "~> 1.1"
   gem "rspec-rails", "~> 8.0"
   gem "selenium-webdriver", "~> 4.34"
   gem "pry", "~> 0.15.2"
