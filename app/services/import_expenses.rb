@@ -43,12 +43,6 @@ class ImportExpenses < BaseService
 
   private
 
-  def find_category(name)
-    return if name.blank?
-
-    Category.find_by(name: name.strip)&.id
-  end
-
   def mbank_hash(expense)
     {
       date: expense[MBANK_KEYS[:date]],
@@ -75,5 +69,11 @@ class ImportExpenses < BaseService
 
   def pkobp_csv?
     (PKOBP_KEYS.values - @smarter_csv.flatten.first.keys).empty?
+  end
+
+  def find_category(name)
+    return if name.blank?
+
+    Category.find_or_create_by(name: name.strip.downcase.capitalize).id
   end
 end
