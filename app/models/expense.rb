@@ -1,4 +1,5 @@
 class Expense < ApplicationRecord
+  belongs_to :subcategory, optional: true
   belongs_to :category, optional: true
   belongs_to :expenses_import
 
