@@ -2,12 +2,20 @@ require "rails_helper"
 RSpec.describe ImportExpenses do
   subject { described_class.call(csv_file, filename) }
 
+  let(:category) { create(:category, name: "Some Category") }
+
+  before do
+    create(:subcategory, name: "Prąd", category:)
+    create(:subcategory, name: "Żywność i chemia domowa", category:)
+    create(:subcategory, name: "Jedzenie poza domem", category:)
+  end
+
   context 'when mbank csv is supplied' do
     let(:csv_file) { fixture_file_upload('spec/fixtures/mbank_expenses.csv', 'text/csv') }
     let(:filename) { 'mbank_expenses.csv' }
 
     it 'imports expenses from a csv file' do
-      expect { subject }.to change { Expense.count }.by(3)
+      expect { subject }.to change { ExpensesImport.count }.by(1).and change { Expense.count }.by(3)
 
       import = ExpensesImport.last
       expect(import.file_name).to eq(filename)
@@ -19,8 +27,8 @@ RSpec.describe ImportExpenses do
     let(:csv_file) { fixture_file_upload('spec/fixtures/pkobp_expenses.csv', 'text/csv') }
     let(:filename) { 'pkobp_expenses.csv' }
 
-    it 'imports expenses from a csv file' do
-      expect { subject }.to change { Expense.count }.by(3)
+    it 'imports expenses from a csv file and maps them to correct subcategories' do
+      expect { subject }.to change { ExpensesImport.count }.by(1).and change { Expense.count }.by(3)
 
       import = ExpensesImport.last
       expect(import.file_name).to eq(filename)

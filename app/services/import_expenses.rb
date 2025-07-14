@@ -44,21 +44,28 @@ class ImportExpenses < BaseService
   private
 
   def mbank_hash(expense)
+    subcategory = Subcategory.find_by_name(name: expense[MBANK_KEYS[:category]])
+
     {
       date: expense[MBANK_KEYS[:date]],
       description: expense[MBANK_KEYS[:description]].squeeze(" ")|| "Brak opisu",
       amount: expense[MBANK_KEYS[:amount]].to_f,
-      category_id: find_category(expense[MBANK_KEYS[:category]]),
+      category_id: subcategory.category.id,
+      subcategory_id: subcategory.id,
       expenses_import_id: @import.id
     }
   end
 
   def pkobp_hash(expense)
+    mapped_name = CategoryMapper::PKOBP_KEY_MAPPING[expense[PKOBP_KEYS[:category]]]
+    subcategory = Subcategory.find_by_name(name: mapped_name)
+
     {
       date: expense[:data_operacji],
       description: expense[:opis_transakcji] || "Brak opisu",
       amount: expense[:kwota].to_f,
-      category_id: find_category(expense[:rodzaj]),
+      category_id: subcategory.category.id,
+      subcategory_id: subcategory.id,
       expenses_import_id: @import.id
     }
   end
@@ -69,11 +76,5 @@ class ImportExpenses < BaseService
 
   def pkobp_csv?
     (PKOBP_KEYS.values - @smarter_csv.flatten.first.keys).empty?
-  end
-
-  def find_category(name)
-    return if name.blank?
-
-    Category.find_or_create_by(name: name.strip.downcase.capitalize).id
   end
 end
