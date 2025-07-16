@@ -21,7 +21,9 @@ class ImportExpenses < BaseService
   def call
     Expense.transaction do
       @import ||= ExpensesImport.create!(file_name: @filename)
-      @smarter_csv ||= SmarterCSV.process(@csv_file, chunk_size: 1000)
+      @smarter_csv ||= File.open(@csv_file, "r:bom|utf-8") do |f|
+        SmarterCSV.process(f, chunk_size: 1000)
+      end
 
       if mbank_csv?
         @smarter_csv.each do |chunk|
