@@ -4,15 +4,14 @@ RSpec.describe ImportExpenses do
 
   let(:category) { create(:category, name: "Some Category") }
 
-  before do
-    create(:subcategory, name: "Prąd", category:)
-    create(:subcategory, name: "Żywność i chemia domowa", category:)
-    create(:subcategory, name: "Jedzenie poza domem", category:)
-  end
+  let!(:subcategory1) { create(:subcategory, name: "Prąd", category:) }
+  let!(:subcategory2) { create(:subcategory, name: "Żywność i chemia domowa", category:) }
+  let!(:subcategory3) { create(:subcategory, name: "Jedzenie poza domem", category:) }
 
   context 'when mbank csv is supplied' do
     let(:csv_file) { fixture_file_upload('spec/fixtures/mbank_expenses.csv', 'text/csv') }
     let(:filename) { 'mbank_expenses.csv' }
+
 
     it 'imports expenses from a csv file' do
       expect { subject }.to change { ExpensesImport.count }.by(1).and change { Expense.count }.by(3)
@@ -20,6 +19,8 @@ RSpec.describe ImportExpenses do
       import = ExpensesImport.last
       expect(import.file_name).to eq(filename)
       expect(import.state).to eq('completed')
+      expect(import.expenses.pluck(:category_id)).to match_array([ category.id, category.id, category.id ])
+      expect(import.expenses.pluck(:subcategory_id)).to match_array([ subcategory1.id, subcategory2.id, subcategory3.id ])
     end
   end
 
@@ -33,6 +34,8 @@ RSpec.describe ImportExpenses do
       import = ExpensesImport.last
       expect(import.file_name).to eq(filename)
       expect(import.state).to eq('completed')
+      expect(import.expenses.pluck(:category_id)).to match_array([ category.id, category.id, category.id ])
+      expect(import.expenses.pluck(:subcategory_id)).to match_array([ subcategory1.id, subcategory2.id, subcategory3.id ])
     end
   end
 
