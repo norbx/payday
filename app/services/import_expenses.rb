@@ -55,7 +55,7 @@ class ImportExpenses < BaseService
 
     {
       date: expense[@key_mapping[:date]],
-      description: expense[@key_mapping[:description]].squeeze(" ")|| "Brak opisu",
+      description: expense[@key_mapping[:description]]&.squeeze(" ")|| "Brak opisu",
       amount: expense[@key_mapping[:amount]].to_f,
       category_id: subcategory.category.id,
       subcategory_id: subcategory.id,
