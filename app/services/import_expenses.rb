@@ -25,12 +25,12 @@ class ImportExpenses < BaseService
 
       if mbank_csv?
         @smarter_csv.each do |chunk|
-          expenses = chunk.map { mbank_hash(_1) }
+          expenses = chunk.map { csv_to_hash(_1, MBANK_KEYS) }
           Expense.insert_all(expenses, unique_by: :expenses_unique_index)
         end
       elsif pkobp_csv?
         @smarter_csv.each do |chunk|
-          expenses = chunk.map { pkobp_hash(_1) }
+          expenses = chunk.map { csv_to_hash(_1, PKOBP_KEYS) }
           Expense.insert_all(expenses, unique_by: :expenses_unique_index)
         end
       else
@@ -43,31 +43,22 @@ class ImportExpenses < BaseService
 
   private
 
-  def mbank_hash(expense)
-    subcategory = Subcategory.find_by_name(name: expense[MBANK_KEYS[:category]])
+  def csv_to_hash(expense, key_mapping)
+    subcategory_name = key_mapping == PKOBP_KEYS ? map_category(expense, key_mapping) : expense[key_mapping[:category]]
+    subcategory = Subcategory.find_by_name(name: subcategory_name)
 
     {
-      date: expense[MBANK_KEYS[:date]],
-      description: expense[MBANK_KEYS[:description]].squeeze(" ")|| "Brak opisu",
-      amount: expense[MBANK_KEYS[:amount]].to_f,
+      date: expense[key_mapping[:date]],
+      description: expense[key_mapping[:description]].squeeze(" ")|| "Brak opisu",
+      amount: expense[key_mapping[:amount]].to_f,
       category_id: subcategory.category.id,
       subcategory_id: subcategory.id,
       expenses_import_id: @import.id
     }
   end
 
-  def pkobp_hash(expense)
-    mapped_name = CategoryMapper::PKOBP_KEY_MAPPING[expense[PKOBP_KEYS[:category]]]
-    subcategory = Subcategory.find_by_name(name: mapped_name)
-
-    {
-      date: expense[:data_operacji],
-      description: expense[:opis_transakcji] || "Brak opisu",
-      amount: expense[:kwota].to_f,
-      category_id: subcategory.category.id,
-      subcategory_id: subcategory.id,
-      expenses_import_id: @import.id
-    }
+  def map_category(expense, key_mapping)
+    CategoryMapper::PKOBP_KEY_MAPPING[expense[key_mapping[:category]]]
   end
 
   def mbank_csv?
