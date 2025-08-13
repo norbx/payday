@@ -27,7 +27,7 @@ group :development, :test do
   gem "capybara", "~> 3.40"
   gem "rubocop-rails-omakase", "~> 1.1"
   gem "rspec-rails", "~> 8.0"
-  gem "selenium-webdriver", "~> 4.34"
+  gem "selenium-webdriver", "~> 4.35"
   gem "pry", "~> 0.15.2"
 end
 
